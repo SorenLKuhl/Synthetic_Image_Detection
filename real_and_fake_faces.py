@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
-from models import resnet18
+from models import resnet18,cnn
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
 import os
@@ -26,7 +26,7 @@ print(device)
 
 
 # Hyper-parameters
-data_fraction = 0.01 # fraction of data to use.
+data_fraction = 0.1 # fraction of data to use.
 learning_rate = 0.01
 num_epochs = 100
 batch_size = 32
@@ -35,8 +35,8 @@ batch_size = 32
 # Data loading. Inspiration from https://www.kaggle.com/code/nicoladisabato/fake-face-detection-with-keras-accuracy-0-987#Data-Loading and https://www.kaggle.com/code/sukhdev1234/deepfakes-recognition-btech-project-49d8ce#2.1.-Network-Architectures
 # Transform
 transform = transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(256),
+            transforms.Resize(32),
+            transforms.CenterCrop(32),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
@@ -63,7 +63,7 @@ test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=Fa
 
 
 # Model
-model = resnet18.get_model()
+model = cnn.get_model()
 
 
 # Loss
