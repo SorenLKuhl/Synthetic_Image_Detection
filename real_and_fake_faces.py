@@ -13,7 +13,8 @@ import random
 
 
 # Path to blackhole dir
-blackhole_path = "/dtu/blackhole/01/169729/"
+# blackhole_path = "/dtu/blackhole/01/169729/"
+blackhole_path = "/dtu/blackhole/18/156408/"
 # Name of dataset
 dataset_name = "real_and_fake_faces/real_vs_fake/real-vs-fake"
 # Dataset path
