@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
-from torchvision.models import resnet18
+from models import resnet18
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
 import os
@@ -26,9 +26,9 @@ print(device)
 
 
 # Hyper-parameters
-data_fraction = 0.1 # fraction of data to use.
+data_fraction = 0.01 # fraction of data to use.
 learning_rate = 0.01
-num_epochs = 10
+num_epochs = 100
 batch_size = 32
 
 
@@ -63,9 +63,7 @@ test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=Fa
 
 
 # Model
-model = resnet18(pretrained=True)
-model.fc = nn.Linear(model.fc.in_features, 2)  # 2 classes -> real and fake.
-model = model.to(device)
+model = resnet18.get_model()
 
 
 # Loss
