@@ -12,35 +12,35 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.num_classes = num_classes
         
-        # Convulutional layer #1: input 3x32x32, output 32x32x32
+        # Convulutional layer #1: input 3x256x256, output 32x256x256
         self.conv1 = nn.Conv2d(3, 32, (3,3), 1, 1)
         self.act1 = nn.ReLU()
         
-        #2x2 pooling: input 32x32x32, output 32x16x16
+        #2x2 pooling: input 32x256x256, output 32x128x128
         self.pool1 = nn.MaxPool2d(kernel_size=(2, 2))
         
-        # Convulutional layer #2: input 32x16x16, output 32x16x16
+        # Convulutional layer #2: input 32x128x128, output 32x128x128
         self.conv2 = nn.Conv2d(32, 32, (3,3), 1, 1)
         self.act2 = nn.ReLU()
         
-        #2x2 pooling: input 32x32x32, output 32x8x8
+        #2x2 pooling: input 32x128x128, output 32x64x64
         self.pool2 = nn.MaxPool2d(kernel_size=(2, 2))
         
-        # Convulutional layer #3: input 32x8x8, output 32x8x8
+        # Convulutional layer #3: input 32x64x64, output 32x64x64
         self.conv3 = nn.Conv2d(32, 32, (3,3), 1, 1)
         self.act3 = nn.ReLU()
         
-        # Flatten for ffnn: input 32x8x8, output 32x8x8
+        # Flatten for ffnn: input 32x64x64, output 32x64x64
         self.flat = nn.Flatten()
         
         # Feed Foward Neural-Network
-        # input 32x8x8, output 512
-        self.fc3 = nn.Linear(32*8*8, 10)
+        # input 32x64x64, output 512
+        self.fc3 = nn.Linear(32*64*64, 2)
         self.act3 = nn.ReLU()
         
         # input 512, output 10
-        self.fc4 = nn.Linear(512, 10)
-        self.act4 = nn.ReLU()
+        # self.fc4 = nn.Linear(512, 2)
+        # self.act4 = nn.ReLU()
         
     def forward(self, x):
         # Convulutional layer #1
