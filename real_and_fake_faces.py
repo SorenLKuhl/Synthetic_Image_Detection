@@ -9,14 +9,15 @@ from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
 import os
 import random
-
-
+import configparser
 
 # Path to blackhole dir
-blackhole_path = "/dtu/blackhole/01/169729/"
-# blackhole_path = "/dtu/blackhole/18/156408/"
+config = configparser.ConfigParser()
+config.read('config.ini')
+blackhole_path = config.get('BLACKHOLE', 'path')
+
 # Name of dataset
-dataset_name = "real_and_fake_faces/real_vs_fake/real-vs-fake"
+dataset_name = "real_vs_fake/real-vs-fake"
 # Dataset path
 dataset_path = blackhole_path + dataset_name
 
