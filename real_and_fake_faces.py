@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
+import tqdm
 from models import resnet18,cnn
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
@@ -28,9 +29,9 @@ print(device)
 
 
 # Hyper-parameters
-data_fraction = 0.01 # fraction of data to use.
-learning_rate = 0.01
-num_epochs = 100
+data_fraction = 0.1 # fraction of data to use.
+learning_rate = 0.001
+num_epochs = 50
 batch_size = 32
 
 
@@ -78,7 +79,7 @@ optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 def train(model, train_loader, criterion, optimizer, device):
     model.train()
     running_loss = 0.0
-    for images, labels in train_loader:
+    for images, labels in tqdm.tqdm(train_loader):
         images, labels = images.to(device), labels.to(device)
         
         # Forward pass
