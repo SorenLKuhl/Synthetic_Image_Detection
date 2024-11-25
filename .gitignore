@@ -2,3 +2,4 @@
 .venv_project/
 *.pyc
 config.ini
+output/
