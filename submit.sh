@@ -2,7 +2,6 @@
 ### General options 
 ### -- specify queue -- 
 #BSUB -q gpuv100
-##BSUB -q hpc
 
 ### -- set the job Name -- 
 #BSUB -J SyntheticImageDetectionModel
@@ -25,7 +24,7 @@
 ### -- set the email address -- 
 # please uncomment the following line and put in your e-mail address,
 # if you want to receive e-mail notifications on a non-default address
-##BSUB -u your_email_address
+##BSUB -u s204399@student.dtu.dk
 
 ### -- send notification at start -- 
 ##BSUB -B 
@@ -44,5 +43,3 @@ venv_path=".venv/bin/activate"
 py_path="real_and_fake_faces.py"
 source "$path$venv_path"
 python "$path$py_path"
-# source "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/.venv/bin/activate"
-# python "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/real_and_fake_faces.py"
