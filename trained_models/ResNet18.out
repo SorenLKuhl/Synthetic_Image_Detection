@@ -1,0 +1,120 @@
+pytorch's ResNet18
+
+# Hyper-parameters
+data_fraction = 0.5 # fraction of data to use.
+learning_rate = 0.001
+num_epochs = 20
+batch_size = 32
+
+Epoch [1/20], Train Loss: 0.1843, Test Loss: 0.1305, Test Accuracy: 94.74%
+Epoch [2/20], Train Loss: 0.0619, Test Loss: 0.0627, Test Accuracy: 97.65%
+Epoch [3/20], Train Loss: 0.0425, Test Loss: 0.0606, Test Accuracy: 97.81%
+Epoch [4/20], Train Loss: 0.0339, Test Loss: 0.0632, Test Accuracy: 97.75%
+Epoch [5/20], Train Loss: 0.0274, Test Loss: 0.0453, Test Accuracy: 98.40%
+Epoch [6/20], Train Loss: 0.0213, Test Loss: 0.0443, Test Accuracy: 98.35%
+Epoch [7/20], Train Loss: 0.0175, Test Loss: 0.0301, Test Accuracy: 98.93%
+Epoch [8/20], Train Loss: 0.0165, Test Loss: 0.0279, Test Accuracy: 99.03%
+Epoch [9/20], Train Loss: 0.0148, Test Loss: 0.0430, Test Accuracy: 98.52%
+Epoch [10/20], Train Loss: 0.0130, Test Loss: 0.0385, Test Accuracy: 98.61%
+Epoch [11/20], Train Loss: 0.0121, Test Loss: 0.0467, Test Accuracy: 98.47%
+Epoch [12/20], Train Loss: 0.0111, Test Loss: 0.0190, Test Accuracy: 99.29%
+Epoch [13/20], Train Loss: 0.0094, Test Loss: 0.0366, Test Accuracy: 99.01%
+Epoch [14/20], Train Loss: 0.0100, Test Loss: 0.0329, Test Accuracy: 99.00%
+Epoch [15/20], Train Loss: 0.0084, Test Loss: 0.0345, Test Accuracy: 98.87%
+Epoch [16/20], Train Loss: 0.0084, Test Loss: 0.0246, Test Accuracy: 99.15%
+Epoch [17/20], Train Loss: 0.0066, Test Loss: 0.0452, Test Accuracy: 98.76%
+Epoch [18/20], Train Loss: 0.0070, Test Loss: 0.0224, Test Accuracy: 99.26%
+Epoch [19/20], Train Loss: 0.0058, Test Loss: 0.0286, Test Accuracy: 99.14%
+Epoch [20/20], Train Loss: 0.0068, Test Loss: 0.0304, Test Accuracy: 98.93%
+Highest accuracy achieved: 99.29
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23278539: <SyntheticImageDetectionModel> in cluster <dcc> Done
+
+Job <SyntheticImageDetectionModel> was submitted from host <hpclogin1> by user <s216161> in cluster <dcc> at Wed Nov 27 18:51:16 2024
+Job was executed on host(s) <4*n-62-11-16>, in queue <gpuv100>, as user <s216161> in cluster <dcc> at Wed Nov 27 19:00:28 2024
+</zhome/aa/0/169729> was used as the home directory.
+</zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection> was used as the working directory.
+Started at Wed Nov 27 19:00:28 2024
+Terminated at Wed Nov 27 20:00:39 2024
+Results reported at Wed Nov 27 20:00:39 2024
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh 
+### General options 
+### -- specify queue -- 
+#BSUB -q gpuv100
+##BSUB -q hpc
+
+### -- set the job Name -- 
+#BSUB -J SyntheticImageDetectionModel
+
+### -- ask for number of cores (default: 1) -- 
+#BSUB -n 4 
+
+### -- specify that the cores must be on the same host -- 
+#BSUB -R "span[hosts=1]"
+
+### -- specify that we need 4GB of memory per core/slot -- 
+#BSUB -R "rusage[mem=4GB]"
+
+### -- specify that we want the job to get killed if it exceeds 5 GB per core/slot -- 
+#BSUB -M 5GB
+
+### -- set walltime limit: hh:mm -- 
+#BSUB -W 06:00 
+
+### -- set the email address -- 
+# please uncomment the following line and put in your e-mail address,
+# if you want to receive e-mail notifications on a non-default address
+##BSUB -u your_email_address
+
+### -- send notification at start -- 
+##BSUB -B 
+
+### -- send notification at completion -- 
+##BSUB -N 
+
+### -- Specify the output and error file. %J is the job-id -- 
+### -- -o and -e mean append, -oo and -eo mean overwrite -- 
+#BSUB -o output/Output_%J.out 
+#BSUB -e output/Output_%J.err 
+
+# here follow the commands you want to execute with input.in as the input file
+path=$(awk -F "=" '/workpath/ {print $2}' config.ini)
+venv_path=".venv/bin/activate"
+py_path="real_and_fake_faces.py"
+source "$path$venv_path"
+python "$path$py_path"
+# source "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/.venv/bin/activate"
+# python "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/real_and_fake_faces.py"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   3451.00 sec.
+    Max Memory :                                 1174 MB
+    Average Memory :                             1064.67 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               15210.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                10
+    Run time :                                   3611 sec.
+    Turnaround time :                            4163 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <output/Output_23278539.err> for stderr output of this job.
+

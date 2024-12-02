@@ -1,0 +1,104 @@
+Identical to v1 but with decreased epochs and higher dropout (0.5) to reduce overfitting.
+
+Epoch [1/10], Train Loss: 0.6672, Test Loss: 0.5121, Test Accuracy: 75.69%
+Epoch [2/10], Train Loss: 0.4562, Test Loss: 0.3304, Test Accuracy: 85.57%
+Epoch [3/10], Train Loss: 0.3397, Test Loss: 0.2754, Test Accuracy: 88.23%
+Epoch [4/10], Train Loss: 0.2743, Test Loss: 0.2018, Test Accuracy: 91.63%
+Epoch [5/10], Train Loss: 0.2291, Test Loss: 0.1791, Test Accuracy: 92.62%
+Epoch [6/10], Train Loss: 0.1947, Test Loss: 0.2187, Test Accuracy: 90.91%
+Epoch [7/10], Train Loss: 0.1687, Test Loss: 0.1558, Test Accuracy: 93.91%
+Epoch [8/10], Train Loss: 0.1454, Test Loss: 0.1351, Test Accuracy: 94.33%
+Epoch [9/10], Train Loss: 0.1267, Test Loss: 0.1162, Test Accuracy: 95.34%
+Epoch [10/10], Train Loss: 0.1142, Test Loss: 0.0961, Test Accuracy: 96.24%
+Highest accuracy achieved: 96.24
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23301903: <SyntheticImageDetectionModel> in cluster <dcc> Done
+
+Job <SyntheticImageDetectionModel> was submitted from host <n-62-20-9> by user <s216161> in cluster <dcc> at Fri Nov 29 13:37:31 2024
+Job was executed on host(s) <4*n-62-20-4>, in queue <gpuv100>, as user <s216161> in cluster <dcc> at Fri Nov 29 13:44:14 2024
+</zhome/aa/0/169729> was used as the home directory.
+</zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection> was used as the working directory.
+Started at Fri Nov 29 13:44:14 2024
+Terminated at Fri Nov 29 14:27:20 2024
+Results reported at Fri Nov 29 14:27:20 2024
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh 
+### General options 
+### -- specify queue -- 
+#BSUB -q gpuv100
+##BSUB -q hpc
+
+### -- set the job Name -- 
+#BSUB -J SyntheticImageDetectionModel
+
+### -- ask for number of cores (default: 1) -- 
+#BSUB -n 4 
+
+### -- specify that the cores must be on the same host -- 
+#BSUB -R "span[hosts=1]"
+
+### -- specify that we need 4GB of memory per core/slot -- 
+#BSUB -R "rusage[mem=4GB]"
+
+### -- specify that we want the job to get killed if it exceeds 5 GB per core/slot -- 
+#BSUB -M 5GB
+
+### -- set walltime limit: hh:mm -- 
+#BSUB -W 06:00 
+
+### -- set the email address -- 
+# please uncomment the following line and put in your e-mail address,
+# if you want to receive e-mail notifications on a non-default address
+##BSUB -u your_email_address
+
+### -- send notification at start -- 
+##BSUB -B 
+
+### -- send notification at completion -- 
+##BSUB -N 
+
+### -- Specify the output and error file. %J is the job-id -- 
+### -- -o and -e mean append, -oo and -eo mean overwrite -- 
+#BSUB -o output/Output_%J.out 
+#BSUB -e output/Output_%J.err 
+
+# here follow the commands you want to execute with input.in as the input file
+path=$(awk -F "=" '/workpath/ {print $2}' config.ini)
+venv_path=".venv/bin/activate"
+py_path="real_and_fake_faces.py"
+source "$path$venv_path"
+python "$path$py_path"
+# source "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/.venv/bin/activate"
+# python "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/real_and_fake_faces.py"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   2299.00 sec.
+    Max Memory :                                 1113 MB
+    Average Memory :                             950.67 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               15271.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                10
+    Run time :                                   2586 sec.
+    Turnaround time :                            2989 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <output/Output_23301903.err> for stderr output of this job.
+

@@ -1,0 +1,241 @@
+CNN inspired by ResNet18
+
+Hyperparameters:
+data_fraction = 0.5 # fraction of data to use.
+learning_rate = 0.001
+num_epochs = 20
+batch_size = 32
+
+Epoch [1/20], Train Loss: 0.6130, Test Loss: 0.4369, Test Accuracy: 79.80%
+Epoch [2/20], Train Loss: 0.3735, Test Loss: 0.2899, Test Accuracy: 87.54%
+Epoch [3/20], Train Loss: 0.2487, Test Loss: 0.1945, Test Accuracy: 92.17%
+Epoch [4/20], Train Loss: 0.1744, Test Loss: 0.2098, Test Accuracy: 91.28%
+Epoch [5/20], Train Loss: 0.1354, Test Loss: 0.1334, Test Accuracy: 94.58%
+Epoch [6/20], Train Loss: 0.1004, Test Loss: 0.1059, Test Accuracy: 95.95%
+Epoch [7/20], Train Loss: 0.0805, Test Loss: 0.0923, Test Accuracy: 96.48%
+Epoch [8/20], Train Loss: 0.0690, Test Loss: 0.0923, Test Accuracy: 96.64%
+Epoch [9/20], Train Loss: 0.0551, Test Loss: 0.0800, Test Accuracy: 96.91%
+Epoch [10/20], Train Loss: 0.0481, Test Loss: 0.1067, Test Accuracy: 96.19%
+Epoch [11/20], Train Loss: 0.0391, Test Loss: 0.1137, Test Accuracy: 96.15%
+Epoch [12/20], Train Loss: 0.0429, Test Loss: 0.0951, Test Accuracy: 96.91%
+Epoch [13/20], Train Loss: 0.0310, Test Loss: 0.0798, Test Accuracy: 97.33%
+Epoch [14/20], Train Loss: 0.0300, Test Loss: 0.0751, Test Accuracy: 97.27%
+Epoch [15/20], Train Loss: 0.0283, Test Loss: 0.0749, Test Accuracy: 97.45%
+Epoch [16/20], Train Loss: 0.0248, Test Loss: 0.0721, Test Accuracy: 97.59%
+Epoch [17/20], Train Loss: 0.0240, Test Loss: 0.0634, Test Accuracy: 97.88%
+Epoch [18/20], Train Loss: 0.0227, Test Loss: 0.0818, Test Accuracy: 97.40%
+Epoch [19/20], Train Loss: 0.0206, Test Loss: 0.0658, Test Accuracy: 97.81%
+Epoch [20/20], Train Loss: 0.0207, Test Loss: 0.0929, Test Accuracy: 96.92%
+Highest accuracy achieved: 97.88
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 23266735: <SyntheticImageDetectionModel> in cluster <dcc> Done
+
+Job <SyntheticImageDetectionModel> was submitted from host <hpclogin1> by user <s216161> in cluster <dcc> at Tue Nov 26 14:51:54 2024
+Job was executed on host(s) <4*n-62-20-2>, in queue <gpuv100>, as user <s216161> in cluster <dcc> at Tue Nov 26 14:57:45 2024
+</zhome/aa/0/169729> was used as the home directory.
+</zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection> was used as the working directory.
+Started at Tue Nov 26 14:57:45 2024
+Terminated at Tue Nov 26 16:54:32 2024
+Results reported at Tue Nov 26 16:54:32 2024
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/sh 
+### General options 
+### -- specify queue -- 
+#BSUB -q gpuv100
+##BSUB -q hpc
+
+### -- set the job Name -- 
+#BSUB -J SyntheticImageDetectionModel
+
+### -- ask for number of cores (default: 1) -- 
+#BSUB -n 4 
+
+### -- specify that the cores must be on the same host -- 
+#BSUB -R "span[hosts=1]"
+
+### -- specify that we need 4GB of memory per core/slot -- 
+#BSUB -R "rusage[mem=4GB]"
+
+### -- specify that we want the job to get killed if it exceeds 5 GB per core/slot -- 
+#BSUB -M 5GB
+
+### -- set walltime limit: hh:mm -- 
+#BSUB -W 06:00 
+
+### -- set the email address -- 
+# please uncomment the following line and put in your e-mail address,
+# if you want to receive e-mail notifications on a non-default address
+##BSUB -u your_email_address
+
+### -- send notification at start -- 
+##BSUB -B 
+
+### -- send notification at completion -- 
+##BSUB -N 
+
+### -- Specify the output and error file. %J is the job-id -- 
+### -- -o and -e mean append, -oo and -eo mean overwrite -- 
+#BSUB -o output/Output_%J.out 
+#BSUB -e output/Output_%J.err 
+
+# here follow the commands you want to execute with input.in as the input file
+path=$(awk -F "=" '/workpath/ {print $2}' config.ini)
+venv_path=".venv/bin/activate"
+py_path="real_and_fake_faces.py"
+source "$path$venv_path"
+python "$path$py_path"
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   4695.00 sec.
+    Max Memory :                                 1117 MB
+    Average Memory :                             1064.45 MB
+    Total Requested Memory :                     16384.00 MB
+    Delta Memory :                               15267.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                10
+    Run time :                                   4885 sec.
+    Turnaround time :                            5119 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <output/Output_23277774.err> for stderr output of this job.
+
+
+
+------------------------------------------------------------------
+
+Network architecture:
+class Model(nn.Module):
+    def __init__(self, num_classes):
+        super(Model, self).__init__()
+        
+        self.dropout_percentage = 0.2
+        
+        # Block 1
+        # input 3x256x256
+        # output 64x128x128
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=(3,3), stride=1, padding=1)
+        self.batchnorm1 = nn.BatchNorm2d(64)
+        self.act1 = nn.ReLU()
+        self.pool1 = nn.MaxPool2d(kernel_size=(2, 2))
+        
+        
+        # Block 2
+        # input 64x128x128
+        # output 64x128x128
+        self.conv2_1 = nn.Conv2d(64, 64, (3,3), 1, 1)
+        self.batchnorm2_1 = nn.BatchNorm2d(64)
+        self.act2_1 = nn.ReLU()
+        self.conv2_2 = nn.Conv2d(64, 64, (3,3), 1, 1)
+        self.batchnorm2_2 = nn.BatchNorm2d(64)
+        self.act2_2 = nn.ReLU()
+        self.dropout2 = nn.Dropout(self.dropout_percentage)
+        
+
+        # Block 3
+        # input 64x128x128
+        # output 128x64x64
+        self.conv3_1 = nn.Conv2d(64, 128, (3,3), (2,2), (1,1))
+        self.batchnorm3_1 = nn.BatchNorm2d(128)
+        self.act3_1 = nn.ReLU()
+        self.conv3_2 = nn.Conv2d(128, 128, (3,3), (1,1), (1,1))
+        self.batchnorm3_2 = nn.BatchNorm2d(128)
+        self.act3_2 = nn.ReLU()
+        self.dropout3 = nn.Dropout(self.dropout_percentage)
+        
+        
+        # Block 4
+        # input 128x64x64
+        # output 128x32x32
+        self.conv4_1 = nn.Conv2d(128, 256, (3,3), (2,2), (1,1))
+        self.batchnorm4_1 = nn.BatchNorm2d(256)
+        self.act4_1 = nn.ReLU()
+        self.conv4_2 = nn.Conv2d(256, 128, (3,3), (1,1), (1,1))
+        self.batchnorm4_2 = nn.BatchNorm2d(128)
+        self.act4_2 = nn.ReLU()
+        self.dropout4 = nn.Dropout(self.dropout_percentage)
+        
+        
+        # Block 5
+        # input 128x32x32
+        # output 64x16x16
+        self.conv5_1 = nn.Conv2d(128, 64, (3,3), (2,2), (1,1))
+        self.batchnorm5_1 = nn.BatchNorm2d(64)
+        self.act5_1 = nn.ReLU()
+        self.conv5_2 = nn.Conv2d(64, 64, (3,3), (1,1), (1,1))
+        self.batchnorm5_2 = nn.BatchNorm2d(64)
+        self.act5_2 = nn.ReLU()
+        self.dropout5 = nn.Dropout(self.dropout_percentage)
+        
+        # Final Block
+        # Flatten for ffnn: input 64x16x16, output 64x16x16
+        self.flat = nn.Flatten()
+        # Feed Foward Neural-Network
+        # input 64x16x16, output num_classes
+        self.fc = nn.Linear(64*16*16, num_classes)
+
+        
+    def forward(self, x):
+        # Block #1
+        x = self.conv1(x)
+        x = self.batchnorm1(x)
+        x = self.act1(x)
+        x = self.pool1(x)
+        
+        # Block #2
+        x = self.conv2_1(x)
+        x = self.batchnorm2_1(x)
+        x = self.act2_1(x)
+        x = self.conv2_2(x)
+        x = self.batchnorm2_2(x)
+        x = self.act2_2(x)
+        x = self.dropout2(x)
+        
+        # Block #3
+        x = self.conv3_1(x)
+        x = self.batchnorm3_1(x)
+        x = self.act3_1(x)
+        x = self.conv3_2(x)
+        x = self.batchnorm3_2(x)
+        x = self.act3_2(x)
+        x = self.dropout3(x)
+        
+        # Block #4
+        x = self.conv4_1(x)
+        x = self.batchnorm4_1(x)
+        x = self.act4_1(x)
+        x = self.conv4_2(x)
+        x = self.batchnorm4_2(x)
+        x = self.act4_2(x)
+        x = self.dropout4(x)
+        
+        # Block #5
+        x = self.conv5_1(x)
+        x = self.batchnorm5_1(x)
+        x = self.act5_1(x)
+        x = self.conv5_2(x)
+        x = self.batchnorm5_2(x)
+        x = self.act5_2(x)
+        x = self.dropout5(x)
+        
+        # Final block
+        x = self.flat(x)
+        x = self.fc(x)     
+        
+        return x
