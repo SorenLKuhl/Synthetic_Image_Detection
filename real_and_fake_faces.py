@@ -19,6 +19,7 @@ config.read('config.ini')
 blackhole_path = config.get('BLACKHOLE', 'path')
 
 # Name of dataset
+dataset_name = "real_and_fake_faces/real_vs_fake/real-vs-fake"
 dataset_name = "real_vs_fake/real-vs-fake"
 # Dataset path
 dataset_path = blackhole_path + dataset_name
@@ -130,4 +131,4 @@ for epoch in range(num_epochs):
           f"Test Accuracy: {test_accuracy:.2f}%")
     
 print("Highest accuracy achieved: " + str(best_accuracy))
-torch.save(best_model.state_dict(), "output/model.pt")
+torch.save(best_model.state_dict(), "trained_models/model.pt")

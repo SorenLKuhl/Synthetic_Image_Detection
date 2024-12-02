@@ -14,8 +14,15 @@ import random
 import configparser
 
 
+# Path to blackhole dir
+config = configparser.ConfigParser()
+config.read('config.ini')
+blackhole_path = config.get('BLACKHOLE', 'path')
+
+# Name of dataset
+dataset_name = "mixed_dataset/train"
 # Dataset path
-dataset_path = "/dtu/blackhole/01/169729/mixed_dataset/train"
+dataset_path = blackhole_path + dataset_name
 
 
 # Device configuration (use GPU if available)
@@ -30,7 +37,7 @@ num_epochs = 10
 batch_size = 32
 
 
-# Data loading. Inspiration from https://www.kaggle.com/code/nicoladisabato/fake-face-detection-with-keras-accuracy-0-987#Data-Loading and https://www.kaggle.com/code/sukhdev1234/deepfakes-recognition-btech-project-49d8ce#2.1.-Network-Architectures
+# Data loading. 
 # Transform
 transform = transforms.Compose([
             transforms.Resize(256),

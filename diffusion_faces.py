@@ -6,7 +6,6 @@ import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
 import tqdm
-from models import resnet18,cnn
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
 import os
@@ -17,8 +16,20 @@ import configparser
 # Path to data
 # dataset_path = "/dtu/blackhole/01/169729/stable-diffusion-face-dataset-main/512/"
 # dataset_path = "/dtu/blackhole/01/169729/real_and_fake_faces/real_vs_fake/real-vs-fake/valid"
-dataset_path = "/dtu/blackhole/01/169729/gan_validation/"
+# dataset_path = "/dtu/blackhole/01/169729/gan_validation/"
 # dataset_path = "/dtu/blackhole/01/169729/mixed_dataset/train"
+# Path to blackhole dir
+config = configparser.ConfigParser()
+config.read('config.ini')
+blackhole_path = config.get('BLACKHOLE', 'path')
+
+# Name of dataset
+# dataset_name = "stable-diffusion-face-dataset-main/512/"
+# dataset_name = "real_and_fake_faces/real_vs_fake/real-vs-fake/valid/"
+dataset_name = "gan_validation/"
+# dataset_name = "mixed_dataset/train/"
+# Dataset path
+dataset_path = blackhole_path + dataset_name
 
 
 # Hyper-parameters
@@ -30,13 +41,17 @@ batch_size = 32
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
 
-
 # Load trained model
+# If loading cnn
+from models import cnn
 model = cnn.get_model()
-# model.load_state_dict(torch.load("output/saved/CNN_v1.pt", weights_only=True))
-model.load_state_dict(torch.load("output/model.pt", weights_only=True))
+model.load_state_dict(torch.load("trained_models/mixed_CNN_v2.pt", weights_only=True))
+
+# If loading Resnet
+# from models import resnet18
 # model = resnet18.get_model()
-# model.load_state_dict(torch.load("output/saved/ResNet18.pt", weights_only=True))
+# model.load_state_dict(torch.load("trained_models/ResNet18.pt", weights_only=True))
+
 model.eval()
 
 
