@@ -1,7 +1,8 @@
 #!/bin/sh 
 ### General options 
 ### -- specify queue -- 
-#BSUB -q hpc
+#BSUB -q gpuv100
+##BSUB -q hpc
 
 ### -- set the job Name -- 
 #BSUB -J SyntheticImageDetectionModel
@@ -19,7 +20,7 @@
 #BSUB -M 5GB
 
 ### -- set walltime limit: hh:mm -- 
-#BSUB -W 00:05 
+#BSUB -W 06:00 
 
 ### -- set the email address -- 
 # please uncomment the following line and put in your e-mail address,
@@ -38,6 +39,10 @@
 #BSUB -e output/Output_%J.err 
 
 # here follow the commands you want to execute with input.in as the input file
-path=$(awk -F "=" '/workpath/ {print $4}' config.ini)
-source "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/.venv/bin/activate"
-python "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/real_and_fake_faces.py"
+path=$(awk -F "=" '/workpath/ {print $2}' config.ini)
+venv_path=".venv/bin/activate"
+py_path="real_and_fake_faces.py"
+source "$path$venv_path"
+python "$path$py_path"
+# source "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/.venv/bin/activate"
+# python "/zhome/aa/0/169729/Desktop/Deep_Learning/Synthetic_Image_Detection/real_and_fake_faces.py"

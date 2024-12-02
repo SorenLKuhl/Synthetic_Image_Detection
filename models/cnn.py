@@ -11,7 +11,7 @@ class Model(nn.Module):
     def __init__(self, num_classes):
         super(Model, self).__init__()
         
-        self.dropout_percentage = 0.2
+        self.dropout_percentage = 0.5
         
         # Block 1
         # input 3x256x256
