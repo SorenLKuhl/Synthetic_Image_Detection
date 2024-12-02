@@ -1,9 +1,11 @@
 # Imports
+import copy
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
+import tqdm
 from models import resnet18,cnn
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
@@ -28,9 +30,9 @@ print(device)
 
 
 # Hyper-parameters
-data_fraction = 0.01 # fraction of data to use.
-learning_rate = 0.01
-num_epochs = 100
+data_fraction = 0.5 # fraction of data to use.
+learning_rate = 0.001
+num_epochs = 20
 batch_size = 32
 
 
@@ -65,7 +67,7 @@ test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=Fa
 
 
 # Model
-model = cnn.get_model()
+model = resnet18.get_model()
 
 
 # Loss
@@ -79,6 +81,7 @@ def train(model, train_loader, criterion, optimizer, device):
     model.train()
     running_loss = 0.0
     for images, labels in train_loader:
+    # for images, labels in tqdm.tqdm(train_loader):  Progress bar in console.
         images, labels = images.to(device), labels.to(device)
         
         # Forward pass
@@ -112,10 +115,19 @@ def evaluate(model, test_loader, criterion, device):
     return running_loss / len(test_loader.dataset), accuracy
 
 # Training the Model
+best_accuracy = 0
+best_model = copy.deepcopy(model)
 for epoch in range(num_epochs):
     train_loss = train(model, train_loader, criterion, optimizer, device)
     test_loss, test_accuracy = evaluate(model, test_loader, criterion, device)
+    # save model if it is the best performing so far
+    if test_accuracy > best_accuracy:
+        best_accuracy = test_accuracy
+        best_model = copy.deepcopy(model)
     print(f"Epoch [{epoch+1}/{num_epochs}], "
           f"Train Loss: {train_loss:.4f}, "
           f"Test Loss: {test_loss:.4f}, "
           f"Test Accuracy: {test_accuracy:.2f}%")
+    
+print("Highest accuracy achieved: " + str(best_accuracy))
+torch.save(best_model.state_dict(), "output/model.pt")
