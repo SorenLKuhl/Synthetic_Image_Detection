@@ -14,10 +14,6 @@ import configparser
 
 
 # Path to data
-# dataset_path = "/dtu/blackhole/01/169729/stable-diffusion-face-dataset-main/512/"
-# dataset_path = "/dtu/blackhole/01/169729/real_and_fake_faces/real_vs_fake/real-vs-fake/valid"
-# dataset_path = "/dtu/blackhole/01/169729/gan_validation/"
-# dataset_path = "/dtu/blackhole/01/169729/mixed_dataset/train"
 # Path to blackhole dir
 config = configparser.ConfigParser()
 config.read('config.ini')
