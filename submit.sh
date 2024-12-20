@@ -24,7 +24,7 @@
 ### -- set the email address -- 
 # please uncomment the following line and put in your e-mail address,
 # if you want to receive e-mail notifications on a non-default address
-##BSUB -u s204399@student.dtu.dk
+##BSUB -u example@example.com
 
 ### -- send notification at start -- 
 ##BSUB -B 
